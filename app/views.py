@@ -154,7 +154,10 @@ def addschedule(request):
     data=request.data;
     gym=Gym.objects.filter(user=data['uid'])[0]
     T1charge=Trainer.objects.get(name=data['trainer1']).charge
-    T2charge=Trainer.objects.get(name=data['trainer2']).charge
+    T2charge=0
+    if(Trainer.objects.filter(name=data['trainer2'])):
+        T2charge=Trainer.objects.get(name=data['trainer2']).charge
+   
     totalprice=int(data['price'])+T1charge+T2charge
     Slot.objects.create(gym=gym,start=data['start'],end=data['end'],slotprice=data['price'],totalprice=totalprice,intake=data['intake'],trainer1=data['trainer1'],trainer2=data['trainer2'])
     q=Slot.objects.last()
