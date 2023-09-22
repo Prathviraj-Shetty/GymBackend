@@ -218,3 +218,8 @@ def slotbookings(request,id):
             per=ClientSerializer(s,many=True)
             i["person"]=per.data[0]
     return Response(serializer.data)
+
+@api_view(['GET'])
+def delete(request,role,id):
+    Trainer.objects.filter(id=id).delete()
+    return Response({"status":"success"})

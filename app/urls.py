@@ -31,4 +31,5 @@ urlpatterns = [
     path('bookslot/', views.bookslot),
     path('slotbookings/<str:id>/', views.slotbookings),
     path('getbookingdetail/<str:id>/', views.getbookingdetail),
+    path('delete/<str:role>/<str:id>/', views.delete),
 ]
