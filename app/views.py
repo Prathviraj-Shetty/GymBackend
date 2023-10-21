@@ -188,7 +188,7 @@ def getgymtrainers(request,gym):
 @api_view(['POST'])
 def bookslot(request):
     data=request.data
-    q=Slot.objects.get(id=data['slotid'])
+    q=Slot.objects.get(id=int(data['slotid']))
     if(q.intake<=q.booked):  
         return Response({"status":"full"}) 
     # else:
