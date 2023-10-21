@@ -200,7 +200,7 @@ def bookslot(request):
     #     q2=Booking.objects.last()
     #     serializer=BookingSerializer(q2,many=False)
     #     return Response(serializer.data|{"status":"notfull"})
-   return Response({"status":"notfull"})
+    return Response({"status":"notfull"})
 
 @api_view(['GET'])
 def getbookingdetail(request,id):
