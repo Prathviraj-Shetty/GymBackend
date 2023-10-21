@@ -224,5 +224,8 @@ def slotbookings(request,id):
 
 @api_view(['GET'])
 def delete(request,role,id):
-    Trainer.objects.filter(id=id).delete()
+    if(role=="trainer"):
+        Trainer.objects.filter(id=id).delete()
+    elif(role=="slotbooking"):
+        Booking.objects.filter(id=id).delete()
     return Response({"status":"success"})
