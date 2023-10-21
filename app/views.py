@@ -188,18 +188,18 @@ def getgymtrainers(request,gym):
 @api_view(['POST'])
 def bookslot(request):
     data=request.data
-    q=Slot.objects.get(id=data['slotid'])
-    if(q.intake<=q.booked):  
-        return Response({"status":"full"}) 
-    else:
-        Slot.objects.filter(id=data['slotid']).update(booked=q.booked+1)
-        gym=Gym.objects.get(id=q.gym.id)
-        client=Client.objects.get(user=data['uid'])
-        total_price=q.slotprice+gym.charge
-        Booking.objects.create(client=client,gym=gym,slot=q,amt=total_price)
-        q2=Booking.objects.last()
-        serializer=BookingSerializer(q2,many=False)
-        return Response({"status":"notfull"})
+    # q=Slot.objects.get(id=data['slotid'])
+    # if(q.intake<=q.booked):  
+    return Response({"status":"full"}) 
+    # else:
+    #     Slot.objects.filter(id=data['slotid']).update(booked=q.booked+1)
+    #     gym=Gym.objects.get(id=q.gym.id)
+    #     client=Client.objects.get(user=data['uid'])
+    #     total_price=q.slotprice+gym.charge
+    #     Booking.objects.create(client=client,gym=gym,slot=q,amt=total_price)
+    #     q2=Booking.objects.last()
+    #     serializer=BookingSerializer(q2,many=False)
+    #     return Response({"status":"notfull"})
     # serializer.data|
 
 @api_view(['GET'])
