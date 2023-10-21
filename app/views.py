@@ -189,7 +189,7 @@ def getgymtrainers(request,gym):
 def bookslot(request):
     data=request.data
     q=Slot.objects.get(id=data['slotid'])
-    if(q.intake<q.booked):  
+    if(q.intake<=q.booked):  
         return Response({"status":"full"}) 
     else:
         Slot.objects.filter(id=data['slotid']).update(booked=q.booked+1)
@@ -226,6 +226,8 @@ def delete(request,role,id):
     if(role=="trainer"):
         Trainer.objects.filter(id=id).delete()
     elif(role=="slotbooking"):
-        # Slot.objects.filter(id=id).update(booked=q.booked+1)
-        Booking.objects.filter(id=id).delete()
+        booking=Booking.objects.get(id=id)
+        slot=Slot.objects.filter(id=booking.slot.id)
+        slot.update(booked=slot[0].booked-1)
+        booking.delete()
     return Response({"status":"success"})
