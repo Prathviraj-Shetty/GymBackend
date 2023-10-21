@@ -189,15 +189,14 @@ def getgymtrainers(request,gym):
 def bookslot(request):
     data=request.data
     q=Slot.objects.get(id=data['slotid'])
-    if(q.intake<q.booked):
-        print("ONE")    
+    if(q.intake<q.booked):  
         return Response({"status":"full"}) 
     else:
-        print("Two")
         Slot.objects.filter(id=data['slotid']).update(booked=q.booked+1)
         gym=Gym.objects.get(id=q.gym.id)
         client=Client.objects.get(user=data['uid'])
-        Booking.objects.create(client=client,gym=gym,slot=q,amt=100)
+        total_price=q.slotprice+gym.charge
+        Booking.objects.create(client=client,gym=gym,slot=q,amt=total_price)
         q2=Booking.objects.last()
         serializer=BookingSerializer(q2,many=False)
         return Response(serializer.data|{"status":"notfull"})
@@ -227,5 +226,6 @@ def delete(request,role,id):
     if(role=="trainer"):
         Trainer.objects.filter(id=id).delete()
     elif(role=="slotbooking"):
+        # Slot.objects.filter(id=id).update(booked=q.booked+1)
         Booking.objects.filter(id=id).delete()
     return Response({"status":"success"})
