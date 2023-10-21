@@ -198,7 +198,7 @@ def bookslot(request):
         total_price=q.slotprice+gym.charge
         Booking.objects.create(client=client,gym=gym,slot=q,amt=total_price)
         q2=Booking.objects.last()
-        # serializer=BookingSerializer(q2,many=False)
+        serializer=BookingSerializer(q2,many=False)
         return Response({"status":"notfull"})
 
 @api_view(['GET'])
