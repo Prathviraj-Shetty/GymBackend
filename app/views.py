@@ -206,7 +206,9 @@ def getbookingdetail(request,id):
     q=Booking.objects.get(id=id)
     q1=Booking.objects.filter(id=id)
     serializer=BookingSerializer(q1,many=True)
-    return Response(serializer.data[0]|{"gymname":q.gym.name,"start":str(q.slot.start)[:5],"end":str(q.slot.end)[:5]})
+    new_serializer=dict(serializer.data[0])
+    gym_dict={"gymname":q.gym.name,"start":str(q.slot.start)[:5],"end":str(q.slot.end)[:5]}
+    return Response({**new_serializer,**gym_dict})
 
 
 @api_view(['GET'])
